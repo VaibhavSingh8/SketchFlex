@@ -1,10 +1,12 @@
 import Menu from "./components/Menu/Menu";
+import Toolbox from "./components/ToolBoard/Toolbox";
 function App() {
   return (
-    <section>
+    <>
       {/* <h1>A digital SketchBook for your needs!</h1> */}
       <Menu />
-    </section>
+      <Toolbox />
+    </>
   );
 }
 
