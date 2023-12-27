@@ -1,5 +1,11 @@
 import { TwitterPicker } from "react-color";
+import { useSelector } from "react-redux";
+
 const Toolbox = () => {
+  const activeMenuItem = useSelector((state) => {
+    return state.menu.activeItem;
+  });
+
   const updateBrushSize = (e) => {};
   return (
     <div className="p-5 absolute top-1/4 left-5 border rounded-md border-solid border-zinc-300 bg-white">
