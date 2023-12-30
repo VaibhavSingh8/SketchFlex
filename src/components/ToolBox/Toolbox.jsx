@@ -8,6 +8,7 @@ const Toolbox = () => {
   const activeMenuItem = useSelector((state) => {
     return state.menu.activeItem;
   });
+  const { size } = useSelector((state) => state.tools[activeMenuItem]);
 
   const showStroke = activeMenuItem === MENU_ITEMS.PENCIL;
 
@@ -32,7 +33,7 @@ const Toolbox = () => {
           <h4 className="text-sm">Stroke</h4>
           <div className="my-4">
             <TwitterPicker
-              width="220px"
+              width="130px"
               colors={["#1e1e1e", "#e03131", "#2f9e44", "#1971c2", "#f08c00"]}
               onChange={handleChangeComplete}
             />
@@ -48,6 +49,7 @@ const Toolbox = () => {
               min={1}
               max={10}
               step={1}
+              value={size}
               onChange={handleStrokeWidth}
               className="h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700"
             />
