@@ -19,16 +19,24 @@ const BoardCanvas = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
+    const beginPath = (x, y) => {
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+    };
+
+    const drawStroke = (x, y) => {
+      ctx.lineTo(x, y);
+      ctx.stroke();
+    };
+
     const handleMouseDown = (e) => {
       drawCanvas.current = true;
-      ctx.beginPath();
-      ctx.moveTo(e.clientX, e.clientY);
+      beginPath(e.clientX, e.clientY);
     };
 
     const handleMouseMove = (e) => {
       if (!drawCanvas.current) return;
-      ctx.lineTo(e.clientX, e.clientY);
-      ctx.stroke();
+      drawStroke(e.clientX, e.clientY);
     };
 
     const handleMouseUp = (e) => {
