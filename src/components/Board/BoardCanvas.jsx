@@ -1,14 +1,18 @@
 import { useEffect, useRef, useLayoutEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import MENU_ITEMS from "../../utils/constants";
+import { activeItem, actionItem } from "../../store/slice/menuSlice";
+
 const BoardCanvas = () => {
+  const dispatch = useDispatch();
   const canvasRef = useRef(null);
   const drawCanvas = useRef(false);
 
   //read data from menu slice
-  const activeMenuItem = useSelector((state) => state.menu.activeItem);
+  const { activeItem, actionItem } = useSelector((state) => state.menu);
 
   //read data from tools slice
-  const { color, size } = useSelector((state) => state.tools[activeMenuItem]);
+  const { color, size } = useSelector((state) => state.tools[activeItem]);
 
   // for first render
   useLayoutEffect(() => {
@@ -71,6 +75,22 @@ const BoardCanvas = () => {
 
     changeDrawConfig(color, size);
   }, [color, size]);
+
+  //for actionItem
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    if (actionItem === MENU_ITEMS.DOWNLOAD) {
+      const dataURL = canvas.toDataURL();
+      const anchor = document.createElement("a");
+      anchor.href = dataURL;
+      anchor.download = "sketch.jpg";
+      anchor.click();
+    }
+    dispatch(actionItem(null));
+  }, [actionItem]);
 
   return <canvas ref={canvasRef}></canvas>;
 };

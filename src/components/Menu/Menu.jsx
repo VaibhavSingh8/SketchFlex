@@ -20,7 +20,9 @@ const Menu = () => {
     dispatch(clickMenuItem(item));
   };
 
-  const handleActionClick = () => {};
+  const handleActionClick = (item) => {
+    dispatch(clickActionItem(item));
+  };
 
   return (
     <div className="absolute px-6 py-2 flex justify-between w-1/4 left-1/2 top-7 -translate-x-1/2 border border-solid border-zinc-300 rounded-md">
@@ -46,19 +48,19 @@ const Menu = () => {
       </div>
       <div
         className="flex hover:bg-slate-200 active:bg-slate-200 cursor-pointer h-8 w-8 justify-center items-center rounded-md"
-        onClick={() => handleActionClick()}
+        onClick={() => handleActionClick(MENU_ITEMS.UNDO)}
       >
         <FontAwesomeIcon icon={faRotateLeft} />
       </div>
       <div
         className="flex hover:bg-slate-200 active:bg-slate-200 cursor-pointer h-8 w-8 justify-center items-center rounded-md"
-        onClick={() => handleActionClick()}
+        onClick={() => handleActionClick(MENU_ITEMS.REDO)}
       >
         <FontAwesomeIcon icon={faRotateRight} />
       </div>
       <div
         className="flex hover:bg-slate-200 active:bg-slate-200 cursor-pointer h-8 w-8 justify-center items-center rounded-md"
-        onClick={() => handleActionClick()}
+        onClick={() => handleActionClick(MENU_ITEMS.DOWNLOAD)}
       >
         <FontAwesomeIcon icon={faDownload} />
       </div>
