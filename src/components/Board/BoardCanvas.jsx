@@ -7,6 +7,8 @@ const BoardCanvas = () => {
   const dispatch = useDispatch();
   const canvasRef = useRef(null);
   const drawCanvas = useRef(false);
+  const historyRef = useRef([]);
+  const historyPointer = useRef(0);
 
   //read data from menu slice
   const { activeItem, actionItem } = useSelector((state) => state.menu);
@@ -45,6 +47,9 @@ const BoardCanvas = () => {
 
     const handleMouseUp = (e) => {
       drawCanvas.current = false;
+      const drawingData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      historyRef.current.push(drawingData);
+      historyPointer.current = historyRef.current.length - 1;
     };
 
     canvas.addEventListener("mousedown", handleMouseDown);
@@ -88,6 +93,22 @@ const BoardCanvas = () => {
       anchor.href = dataURL;
       anchor.download = "sketch.jpg";
       anchor.click();
+    } else if (
+      actionItem === MENU_ITEMS.UNDO ||
+      actionItem === MENU_ITEMS.REDO
+    ) {
+      if (historyPointer.current > 0 && actionItem === MENU_ITEMS.UNDO)
+        historyPointer.current -= 1;
+
+      if (
+        historyPointer.current < historyRef.current.length - 1 &&
+        actionItem === MENU_ITEMS.REDO
+      )
+        historyPointer.current += 1;
+
+      const drawingData = historyRef.current[historyPointer.current];
+
+      ctx.putImageData(drawingData, 0, 0);
     }
     dispatch(clickActionItem(null));
   }, [actionItem]);
