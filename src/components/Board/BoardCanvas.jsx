@@ -1,7 +1,7 @@
 import { useEffect, useRef, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MENU_ITEMS from "../../utils/constants";
-import { activeItem, actionItem } from "../../store/slice/menuSlice";
+import { clickMenuItem, clickActionItem } from "../../store/slice/menuSlice";
 
 const BoardCanvas = () => {
   const dispatch = useDispatch();
@@ -89,7 +89,7 @@ const BoardCanvas = () => {
       anchor.download = "sketch.jpg";
       anchor.click();
     }
-    dispatch(actionItem(null));
+    dispatch(clickActionItem(null));
   }, [actionItem]);
 
   return <canvas ref={canvasRef}></canvas>;
